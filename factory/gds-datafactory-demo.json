@@ -1,0 +1,9 @@
+{
+	"name": "gds-datafactory-demo",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e6002f9c-c45f-4fc5-a110-9b63e3524a0e",
+		"tenantId": "547ee477-9af6-41d3-b5a9-e85cc302a98e"
+	}
+}
