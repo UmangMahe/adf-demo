@@ -1,5 +1,5 @@
 {
-	"name": "SnowflakeTable",
+	"name": "OutputTable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Snowflake",
