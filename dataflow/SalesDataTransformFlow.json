@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SnowflakeTable",
+						"referenceName": "SnowflakeSalesAggregateTable",
 						"type": "DatasetReference"
 					},
 					"name": "sink"
