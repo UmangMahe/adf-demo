@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "gds-datafactory-demo"
+		},
+		"AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"Snowflake_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://adlsaccountdevd.dfs.core.windows.net/"
+		},
+		"Snowflake_properties_typeProperties_database": {
+			"value": "sales_mart"
+		},
+		"Snowflake_properties_typeProperties_role": {
+			"value": "accountadmin"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
