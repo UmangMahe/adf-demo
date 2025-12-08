@@ -74,46 +74,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeSalesAggregateTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Snowflake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [
-					{
-						"name": "YEAR_ID",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "MONTH_ID",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "TOTALSALES",
-						"type": "NUMBER",
-						"precision": 10,
-						"scale": 2
-					}
-				],
-				"typeProperties": {
-					"schema": "PUBLIC",
-					"table": "SALESAGGREGATE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Snowflake')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Sales_Data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -181,6 +141,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeSalesAggregateTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [
+					{
+						"name": "YEAR_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "MONTH_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "TOTALSALES",
+						"type": "NUMBER",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "PUBLIC",
+					"table": "SALESAGGREGATE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Snowflake')]"
 			]
 		},
 		{
@@ -260,7 +260,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {

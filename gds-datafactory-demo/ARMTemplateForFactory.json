@@ -33,43 +33,49 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/SnowflakeSalesAggregateTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Snowflake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SnowflakeV2Table",
-				"schema": [
+				"activities": [
 					{
-						"name": "YEAR_ID",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "MONTH_ID",
-						"type": "NUMBER",
-						"precision": 38,
-						"scale": 0
-					},
-					{
-						"name": "TOTALSALES",
-						"type": "NUMBER",
-						"precision": 10,
-						"scale": 2
+						"name": "SalesDataTransformFlow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SalesDataTransformFlow",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSales": {},
+									"sink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
-				"typeProperties": {
-					"schema": "PUBLIC",
-					"table": "SALESAGGREGATE"
-				}
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Snowflake')]"
+				"[concat(variables('factoryId'), '/dataflows/SalesDataTransformFlow')]"
 			]
 		},
 		{
@@ -140,6 +146,46 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SnowflakeSalesAggregateTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Snowflake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [
+					{
+						"name": "YEAR_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "MONTH_ID",
+						"type": "NUMBER",
+						"precision": 38,
+						"scale": 0
+					},
+					{
+						"name": "TOTALSALES",
+						"type": "NUMBER",
+						"precision": 10,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "PUBLIC",
+					"table": "SALESAGGREGATE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Snowflake')]"
 			]
 		},
 		{
@@ -257,52 +303,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Sales_Data')]",
 				"[concat(variables('factoryId'), '/datasets/SnowflakeSalesAggregateTable')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SalesDataTransformFlow",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "SalesDataTransformFlow",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"sourceSales": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/SalesDataTransformFlow')]"
 			]
 		}
 	]
